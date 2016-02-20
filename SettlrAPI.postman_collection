@@ -1,0 +1,102 @@
+{
+	"id": "1caa2e7f-0e10-9214-6076-9ee4cfb4ffd7",
+	"name": "Settlr API",
+	"description": "API calls for Settlr.",
+	"order": [
+		"e8719103-6fa1-d377-4041-f8e4560ea0e1"
+	],
+	"folders": [],
+	"timestamp": 1456000047256,
+	"owner": 0,
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "e8719103-6fa1-d377-4041-f8e4560ea0e1",
+			"headers": "",
+			"url": "localhost:3000/api/registerUser",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "POST",
+			"collectionId": "1caa2e7f-0e10-9214-6076-9ee4cfb4ffd7",
+			"data": [
+				{
+					"key": "username",
+					"value": "Bob",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "age",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "minBudget",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "maxBudget",
+					"value": "2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "officeLocation_lat",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "officeLocation_lon",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "household_children",
+					"value": "2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "household_adults",
+					"value": "2",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "transportation_car",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "transportation_transit",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "transportation_bike",
+					"value": "1",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"name": "Register a User",
+			"description": "Register a user",
+			"descriptionFormat": "html",
+			"time": 1456000091905,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
