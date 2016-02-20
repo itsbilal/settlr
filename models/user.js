@@ -5,21 +5,21 @@ var mongoose = require("mongoose");
 module.exports = function(){
   var user = {
     name: String,
-    age: int,
-    minBudget: int,
-    maxBudget: int,
-    officeLocation {
+    age: Number,
+    minBudget: Number,
+    maxBudget: Number,
+    officeLocation: {
       lat: Number,
       lon: Number
     },
-    household {
-      children: int,
-      adults: int
+    household: {
+      children: Number,
+      adults: Number
     },
-    transportation {
-      car: int,
-      transit: int,
-      bike: int
+    transportation: {
+      car: Number,
+      transit: Number,
+      bike: Number
     }
   };
 
