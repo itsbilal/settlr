@@ -2,7 +2,8 @@
 var mongoose = require("mongoose");
 var promisify = require("../helpers/promisify");
 var fs = require("fs");
-var parse = require("csv-parse").parse;
+var path = require("path");
+var parse = require("csv-parse");
 
 mongoose.connect("mongodb://localhost/settlr");
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
@@ -22,7 +23,7 @@ mongoose.connection.once('open', function(){
       })
   };
 
-  promisify.m(fs, 'readFile', "./crime.csv")
+  promisify.m(fs, 'readFile', path.join(__dirname, "./crime.csv"))
     .then((rawCsv) => {
       return promisify.f(parse, rawCsv)
     })
@@ -33,8 +34,12 @@ mongoose.connection.once('open', function(){
         return get_neighbourhood_if_exists(nid)
           .then((hood) => {
             hood.scores.push({category: "crime", value: crimes});
+            return promisify.m(hood, 'save');
           });
       }));
+    })
+    .then(() => {
+      process.exit();
     })
     .catch((err) => {
       console.error(err);
