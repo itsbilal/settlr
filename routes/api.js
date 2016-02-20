@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/registerUser', function(req, res) {
   var newUser = new User({
-  	name: req.body.username,
     age: req.body.age,
     minBudget: req.body.minBudget,
     maxBudget: req.body.maxBudget,

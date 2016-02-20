@@ -4,7 +4,6 @@ var mongoose = require("mongoose");
 
 module.exports = function(){
   var user = {
-    name: String,
     age: Number,
     minBudget: Number,
     maxBudget: Number,
