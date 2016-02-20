@@ -10,6 +10,12 @@ module.exports = function(){
         lat: Number,
         lon: Number
       }
+    ],
+    scores: [
+      {
+        category: String,
+        value: Number,
+      }
     ]
   };
 
