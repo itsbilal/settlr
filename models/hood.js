@@ -5,12 +5,8 @@ var mongoose = require("mongoose");
 module.exports = function(){
   var hood = {
     title: String,
-    vertices: [
-      {
-        lat: Number,
-        lon: Number
-      }
-    ],
+    geometry: mongoose.Schema.Types.Mixed,
+    nid: Number,
     scores: [
       {
         category: String,
