@@ -44,6 +44,7 @@
 
 <div ng-controller="MapView">
   <div id="map" ayy-lmao-map></div>
+  
   <div class="container-fluid" id="main">
     <div class="row">
     	<div class="col-xs-8" id="left">
@@ -57,6 +58,7 @@
           </div>
           <p>{[ hood.score ]}</p>
           <table class="table" ng-show="$parent.selectedHood === hood.nid">
+          <div id="", style="overflow-y:scroll;">
             <tr>
               <th>Factor</th>
               <th>Value</th>
@@ -69,15 +71,17 @@
               <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
               <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
             </tr>
+            </div>
           </table>
           <hr>
         </div>
-        
+        </div>
       </div>
       <div class="col-xs-4"></div>
       
     </div>
-  </div>
+  
+</div>
 </div>
 <!-- end template -->
 

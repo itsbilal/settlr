@@ -25,9 +25,9 @@ angular.module("results", [])
                   spatialReference: {"wkid":102100,"latestWkid":3857}
                 },
                 "symbol": {
-                  "color":(scope.selectedHood === hood.nid ? [0,0,0,255] : [0,0,0,64]),
+                  "color":(scope.selectedHood === hood.nid ? [73,191,255,104] : [0,0,0,64]),
                   "outline":{
-                    "color":[0,0,0,255],
+                    "color":[73,191,255,255],
                     "width":1,
                     "type":"esriSLS",
                     "style":"esriSLSSolid"
