@@ -21,39 +21,47 @@ router.post('/registerUser', function(req, res) {
       uri : "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text="+ address +"&f=json",
       method : 'GET',
   };
-  request(options, function(error,response,body){
-       if (!error && response.statusCode == 200) {
-          var obj = JSON.parse(body);
-          var lat = obj.locations[0].feature.geometry.y;
-          var lon = obj.locations[0].feature.geometry.x;
-          console.log(lat + " " + lon);
-          
-          var newUser = new User({
-            age: req.body.age,
-            minBudget: req.body.minBudget,
-            maxBudget: req.body.maxBudget,
-            officeLocation: {
-              lat: lat,
-              lon: lon
-            },
-            household: {
-              children: req.body.household_children,
-              adults: req.body.household_adults
-            },
-            transportation: req.body.transportation
-          });
+  
+  promisify.f(request, options)
+    .then(function(response,body){
+     if (response.statusCode == 200) {
+        var obj = JSON.parse(response.body);
+        var lat = obj.locations[0].feature.geometry.y;
+        var lon = obj.locations[0].feature.geometry.x;
+        console.log(lat + " " + lon);
+        
+        var newUser = new User({
+          age: req.body.age,
+          minBudget: req.body.minBudget,
+          maxBudget: req.body.maxBudget,
+          officeLocation: {
+            lat: lat,
+            lon: lon
+          },
+          household: {
+            children: req.body.household_children,
+            adults: req.body.household_adults
+          },
+          transportation: req.body.transportation
+        });
 
-          computeTopNeighbourhood(lat, lon, req, res);
-          // newUser.save(function (err) {
-          //   if (err) {
-          //     res.send('Error');
-          //   }
-          // });
-       }   
-  }).on('error', function(err) {
+        return computeTopNeighbourhood(lat, lon, req, res);
+        // newUser.save(function (err) {
+        //   if (err) {
+        //     res.send('Error');
+        //   }
+        // });
+     } else {
+      return null;
+     }
+  })
+  .then(function(hoods){
+    res.render("results", { results: JSON.stringify(hoods) });
+  })
+  .catch(function(err) {
     console.error(err);
     res.send('Error');
-  });   
+  });
 });
 
 function getFactors(body) {
@@ -95,7 +103,7 @@ function getFactors(body) {
 }
 
 function computeTopNeighbourhood(workLat, workLon, req, res){
-  promisify.m(Hood, 'find').then(function(result){
+  return promisify.m(Hood, 'find').then(function(result){
     var hoods = [];
     var keys = _.pluck(result[0].scores, "category");
     var values = keys.map((category) => {
@@ -140,19 +148,21 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
                           workLon+","+workLat+";"+hood.centroid.y+","+hood.centroid.x+"&f=pjson")]);
     });
 
-    Promise.all(promises).then(function(value) { 
-      //console.log(value);
+    return Promise.all(promises)
+  })
+  .then(function(value) { 
+    //console.log(value);
 
-      var hoods = value.map(function(obj){
-        var hood = obj[0];
-        var time = JSON.parse(obj[1].body).directions[0].summary.totalTime;
-        hood['timeToWork'] = time;
-        return hood;
-      }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
+    var hoods = value.map(function(obj){
+      var hood = obj[0];
+      var time = JSON.parse(obj[1].body).directions[0].summary.totalTime;
+      hood['timeToWork'] = time;
+      return hood;
+    }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
 
-      res.send(JSON.stringify(hoods));
-    });
-  }).catch(function(reason) {
+    return Promise.resolve(hoods);
+  })
+  .catch(function(reason) {
     console.error(reason);
   });
 };

@@ -17,7 +17,10 @@
 		<link href="/stylesheets/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://js.arcgis.com/3.15/"></script>
-    <script src="javascript/results.js"></script>
+    <script>
+      window.hoods = '{{{ results }}}';
+    </script>
+    <script src="/javascript/results.js"></script>
 	</head>
 	<body ng-app="results">
 <!-- begin template -->
