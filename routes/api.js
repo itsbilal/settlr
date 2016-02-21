@@ -164,7 +164,7 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
       hood['timeToWork'] = time;
       return hood;
     })
-    .sort(function(a,b){return b.timeToWork - a.timeToWork }).slice(0,15);
+    .sort(function(a,b){return a.timeToWork - b.timeToWork }).slice(0,15);
 
     return Promise.resolve(hoods);
   })
