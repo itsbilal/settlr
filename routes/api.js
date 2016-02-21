@@ -62,7 +62,7 @@ router.post('/registerUser', function(req, res) {
 function computeTopNeighbourhood(workLat, workLon, res){
   promisify.m(Hood, 'find').then(function(result){
     var hoods = [];
-    var keys = _.pluck(result.scores, "category");
+    var keys = _.pluck(result[0].scores, "category");
     var values = keys.map((category) => {
       return _.max(result.map((hood) => {
         return _.find(hood.scores, (score) => {score.category == category});
