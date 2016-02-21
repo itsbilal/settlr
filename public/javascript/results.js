@@ -16,32 +16,37 @@ angular.module("results", [])
           });
 
           // scope.$watch(scope.hoods, function(){
-          var graphics = scope.hoods.map(function(hood) {
-            var polygonJson = {
-              geometry: {
-                rings: hood.geometry.rings,
-                spatialReference: {"wkid":102100,"latestWkid":3857}
-              },
-              "symbol": {
-                "color":[0,0,0,64],
-                "outline":{
-                  "color":[0,0,0,255],
-                  "width":1,
-                  "type":"esriSLS",
-                  "style":"esriSLSSolid"
+          var reloadMap = function(){
+            map.graphics.clear();
+            var graphics = scope.hoods.map(function(hood) {
+              var polygonJson = {
+                geometry: {
+                  rings: hood.geometry.rings,
+                  spatialReference: {"wkid":102100,"latestWkid":3857}
                 },
-                "type":"esriSFS","style":"esriSFSSolid"
-              }
-            };
+                "symbol": {
+                  "color":(scope.selectedHood === hood.nid ? [0,0,0,255] : [0,0,0,64]),
+                  "outline":{
+                    "color":[0,0,0,255],
+                    "width":1,
+                    "type":"esriSLS",
+                    "style":"esriSLSSolid"
+                  },
+                  "type":"esriSFS","style":"esriSFSSolid"
+                }
+              };
 
-            return new Graphic(polygonJson);
-          });
+              return new Graphic(polygonJson);
+            });
 
-          map.on("load", function(){
             graphics.forEach(function(graphic){
               map.graphics.add(graphic);
             });
-          });
+          };
+
+          map.on("load", reloadMap);
+          scope.$watch("selectedHood", reloadMap);
+          
           // }, true);
         });
       }
