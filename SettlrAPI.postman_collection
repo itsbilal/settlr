@@ -15,20 +15,13 @@
 			"id": "e8719103-6fa1-d377-4041-f8e4560ea0e1",
 			"headers": "",
 			"url": "localhost:3000/api/registerUser",
-			"pathVariables": {},
 			"preRequestScript": "",
+			"pathVariables": {},
 			"method": "POST",
-			"collectionId": "1caa2e7f-0e10-9214-6076-9ee4cfb4ffd7",
 			"data": [
 				{
-					"key": "username",
-					"value": "Bob",
-					"type": "text",
-					"enabled": true
-				},
-				{
 					"key": "age",
-					"value": "1",
+					"value": "19",
 					"type": "text",
 					"enabled": true
 				},
@@ -45,14 +38,8 @@
 					"enabled": true
 				},
 				{
-					"key": "officeLocation_lat",
-					"value": "0",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "officeLocation_lon",
-					"value": "0",
+					"key": "officeLocation",
+					"value": "m1w3t1",
 					"type": "text",
 					"enabled": true
 				},
@@ -69,34 +56,22 @@
 					"enabled": true
 				},
 				{
-					"key": "transportation_car",
-					"value": "1",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "transportation_transit",
-					"value": "1",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "transportation_bike",
-					"value": "1",
+					"key": "transportation",
+					"value": "car",
 					"type": "text",
 					"enabled": true
 				}
 			],
 			"dataMode": "urlencoded",
-			"name": "Register a User",
-			"description": "Register a user",
-			"descriptionFormat": "html",
-			"time": 1456000091905,
 			"version": 2,
-			"responses": [],
 			"tests": "",
 			"currentHelper": "normal",
-			"helperAttributes": {}
+			"helperAttributes": {},
+			"time": 1456020968338,
+			"name": "Register a User",
+			"description": "Register a user",
+			"collectionId": "1caa2e7f-0e10-9214-6076-9ee4cfb4ffd7",
+			"responses": []
 		}
 	]
 }
