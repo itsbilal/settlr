@@ -85,7 +85,7 @@ function getFactors(body) {
 
   f.crime = 1.00 + (parseInt(body.children)*0.10);
   f.pollutants = 0.85;
-  f.density = -1 * ((parseInt(body.adult) + parseInt(body.children)) - 2.5);
+  f.density = -1 * ((parseInt(body.adults) + parseInt(body.children)) - 2.5);
   f.green_spaces = 0.85 + (0.15 * parseInt(body.children));
 
   // capping
@@ -108,9 +108,10 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
     var keys = _.pluck(result[0].scores, "category");
     var values = keys.map((category) => {
       return _.max(result.map((hood) => {
-        return _.find(hood.scores, (score) => {score.category == category});
+        return _.find(hood.scores, (score) => { return score.category === category }).value;
       }));
     });
+
     var maxMap = _.object(keys, values);
 
     for (var i = 0; i < result.length; i++){
@@ -132,10 +133,14 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
     hoods = hoods.map((hood) => {
       hood.score = hood.scores.reduce((prev, curr) => {
         var value = curr.value / maxMap[curr.category];
-        if (curr.category === "crime" || curr.category === "pollutants") {
+        if (factors[curr.category] < 0) {
           value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
         }
-        return prev + (value * factors[curr.category]);
+        console.log(curr.category);
+        console.log(value);
+        console.log(factors[curr.category]);
+        console.log(" ")
+        return prev + (value * Math.abs(factors[curr.category]));
       }, 0);
       return hood;
     });
