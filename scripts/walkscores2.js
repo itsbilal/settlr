@@ -43,6 +43,7 @@ mongoose.connection.once('open', function(){
         body = JSON.parse(response.body);
         _hood.scores.push({category: "walkscore", value: body.walkscore});
         console.log("Neighbourhood: %s, %d", _hood.title, body.walkscore);
+        return promisify.m(_hood, 'save');
       });
   })
 
