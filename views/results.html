@@ -18,38 +18,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://js.arcgis.com/3.15/"></script>
     <script src="javascript/results.js"></script>
-    <script>
-      var map;
-
-      require(["esri/map", "esri/geometry/Polygon", "esri/graphic", "esri/layers/GraphicsLayer", "dojo/domReady!"], function(Map, Polygon, Graphic, GraphicsLayer) { 
-
-        map = new Map("map", {
-          basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
-          center: [-79.4, 43.7], // longitude, latitude
-          zoom: 12
-        });
-
-
-      var polygonJson = {"geometry":{"rings":[[[-8837787,5416221],[-8838537,5415746],[-8839111,5417691],[-8839103,5417714],[-8838864,5417778],[-8839026,5418347],[-8839035,5418440],[-8839288,5418366],[-8839422,5418853],[-8839398,5418828],[-8839097,5418694],[-8838549,5418494],[-8838421,5418456],[-8838334,5418465],[-8838191,5417553],[-8837787,5416221]]], "spatialReference":{"wkid":102100,"latestWkid":3857}}, "symbol":{"color":[0,0,0,64],"outline":{"color":[0,0,0,255],
-    "width":1,"type":"esriSLS","style":"esriSLSSolid"},
-    "type":"esriSFS","style":"esriSFSSolid"}}; 
-      //var polygon = new Polygon(polygonJson);
-
-      //map.enableMapNavigation();
-      // map.addLayer(new GraphicsLayer());
-
-      var graphic = new Graphic(polygonJson);
-      
-      map.on("load", function(){
-        map.graphics.add(graphic);
-      });
-      
-      
-
-    });
-
-      
-    </script>
 	</head>
 	<body ng-app="results">
 <!-- begin template -->
@@ -71,39 +39,41 @@
 </div>
 
 
-<div id="map"></div>
-<div class="container-fluid" id="main" ng-controller="MapView">
-  <div class="row">
-  	<div class="col-xs-8" id="left">
-    
-      <h2>Your Neighbourhood Matches</h2>
+<div ng-controller="MapView">
+  <div id="map" ayy-lmao-map></div>
+  <div class="container-fluid" id="main">
+    <div class="row">
+    	<div class="col-xs-8" id="left">
       
-      <!-- item list -->
-      <div ng-repeat="hood in hoods">
-        <div class="panel panel-default">
-          <div class="panel-heading"><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></div>
+        <h2>Your Neighbourhood Matches</h2>
+        
+        <!-- item list -->
+        <div ng-repeat="hood in hoods">
+          <div class="panel panel-default">
+            <div class="panel-heading"><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></div>
+          </div>
+          <p>{[ hood.score ]}</p>
+          <table class="table" ng-show="$parent.selectedHood === hood.nid">
+            <tr>
+              <th>Factor</th>
+              <th>Value</th>
+              <th>Trend</th>
+            </tr>
+            <tr ng-repeat="score in hood.scores">
+              <td>{[score.category]}</td>
+              <td>{[score.value]}</td>
+              <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
+              <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+              <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
+            </tr>
+          </table>
+          <hr>
         </div>
-        <p>{[ hood.score ]}</p>
-        <table class="table" ng-show="$parent.selectedHood === hood.nid">
-          <tr>
-            <th>Factor</th>
-            <th>Value</th>
-            <th>Trend</th>
-          </tr>
-          <tr ng-repeat="score in hood.scores">
-            <td>{[score.category]}</td>
-            <td>{[score.value]}</td>
-            <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
-            <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
-            <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
-          </tr>
-        </table>
-        <hr>
+        
       </div>
+      <div class="col-xs-4"></div>
       
     </div>
-    <div class="col-xs-4"></div>
-    
   </div>
 </div>
 <!-- end template -->

@@ -4,6 +4,49 @@ angular.module("results", [])
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
   })
+  .directive("ayyLmaoMap", function(){
+    return {
+      link: function(scope, element, attrs) {
+        require(["esri/map", "esri/geometry/Polygon", "esri/graphic", "dojo/domReady!"], function(Map, Polygon, Graphic) {
+
+          var map = new Map("map", {
+            basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+            center: [-79.4, 43.7], // longitude, latitude
+            zoom: 12
+          });
+
+          // scope.$watch(scope.hoods, function(){
+          var graphics = scope.hoods.map(function(hood) {
+            var polygonJson = {
+              geometry: {
+                rings: hood.geometry.rings,
+                spatialReference: {"wkid":102100,"latestWkid":3857}
+              },
+              "symbol": {
+                "color":[0,0,0,64],
+                "outline":{
+                  "color":[0,0,0,255],
+                  "width":1,
+                  "type":"esriSLS",
+                  "style":"esriSLSSolid"
+                },
+                "type":"esriSFS","style":"esriSFSSolid"
+              }
+            };
+
+            return new Graphic(polygonJson);
+          });
+
+          map.on("load", function(){
+            graphics.forEach(function(graphic){
+              map.graphics.add(graphic);
+            });
+          });
+          // }, true);
+        });
+      }
+    }
+  })
   .controller("MapView", function($scope, $http){
     // Test data for now
     $scope.hoods = [{ "_id" : 1, "geometry" : { "rings" : [ [ [ -8820687, 5427358 ], [ -8820729, 5427320 ], [ -8820760, 5427243 ], [ -8820688, 5427174 ], [ -8820692, 5427158 ], [ -8820733, 5427152 ], [ -8820763, 5427078 ], [ -8820737, 5427018 ], [ -8820796, 5426795 ], [ -8820792, 5426677 ], [ -8820809, 5426660 ], [ -8820867, 5426661 ], [ -8820908, 5426605 ], [ -8820922, 5426511 ], [ -8820964, 5426405 ], [ -8820981, 5426211 ], [ -8821126, 5426091 ], [ -8821158, 5426087 ], [ -8821230, 5426117 ], [ -8821294, 5426105 ], [ -8821345, 5426122 ], [ -8821409, 5426117 ], [ -8821432, 5426167 ], [ -8821469, 5426184 ], [ -8821630, 5426161 ], [ -8821721, 5426106 ], [ -8821799, 5426001 ], [ -8821852, 5426023 ], [ -8821912, 5425992 ], [ -8822063, 5425797 ], [ -8822181, 5425756 ], [ -8822141, 5425628 ], [ -8822223, 5425606 ], [ -8822583, 5425557 ], [ -8822684, 5425573 ], [ -8822709, 5425637 ], [ -8822737, 5425655 ], [ -8822928, 5425619 ], [ -8823051, 5425671 ], [ -8823213, 5425709 ], [ -8823346, 5425686 ], [ -8823376, 5425777 ], [ -8823924, 5425609 ], [ -8824105, 5426194 ], [ -8823629, 5426617 ], [ -8823819, 5427374 ], [ -8824391, 5429404 ], [ -8824458, 5429784 ], [ -8824828, 5431041 ], [ -8824191, 5431229 ], [ -8822624, 5431648 ], [ -8822278, 5430480 ], [ -8822155, 5429926 ], [ -8821584, 5427894 ], [ -8821560, 5427690 ], [ -8821316, 5427760 ], [ -8821291, 5427705 ], [ -8821235, 5427720 ], [ -8821061, 5427640 ], [ -8820969, 5427623 ], [ -8820921, 5427574 ], [ -8820767, 5427477 ], [ -8820736, 5427375 ], [ -8820715, 5427353 ], [ -8820687, 5427358 ] ] ] }, "title" : "Bendale", "nid" : 127, "scores" : [ { "category" : "crime", "value" : 546, "_id" : 1 }, { "category" : "walkscore", "value" : 54, "_id" : 1 }, { "category" : "density", "value" : 3766.216216, "_id" : 1 }, { "category" : "green_spaces", "value" : 0.023378571, "delta" : -0.0000781861, "_id" : 1 }, { "category" : "pollutants", "value" : 575, "_id" : 1 } ], "__v" : 4, "centroid" : { "x" : 43.76036560110046, "y" : -79.25740506027141 } },
