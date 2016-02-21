@@ -15,11 +15,7 @@ module.exports = function(){
       children: Number,
       adults: Number
     },
-    transportation: {
-      car: Number,
-      transit: Number,
-      bike: Number
-    }
+    transportation: String
   };
 
   // Register the model

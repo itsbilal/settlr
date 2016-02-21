@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var User = mongoose.model('User');
 var bodyParser = require('body-parser');
+var request = require("request");
 
 router.use(bodyParser.json()); // support json encoded bodies
 router.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
@@ -13,32 +14,47 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/registerUser', function(req, res) {
-  var newUser = new User({
-    age: req.body.age,
-    minBudget: req.body.minBudget,
-    maxBudget: req.body.maxBudget,
-    officeLocation: {
-      lat: req.body.officeLocation_lat,
-      lon: req.body.officeLocation_lon
-    },
-    household: {
-      children: req.body.household_children,
-      adults: req.body.household_adults
-    },
-    transportation: {
-      car: req.body.transportation_car,
-      transit: req.body.transportation_transit,
-      bike: req.body.transportation_bike
-    }
-  });
+  var address = req.body.officeLocation;
 
-  newUser.save(function (err) {
-  	if (err) {
-  		console.log('Error');
-  	}
-  });
+  var options = {
+      uri : "http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/find?text="+ address +"&f=json",
+      method : 'GET',
+  };
+  request(options, function(error,response,body){
+       if (!error && response.statusCode == 200) {
+          console.log(body);
+          var obj = JSON.parse(body);
+          var lat = obj.locations[0].feature.geometry.y;
+          var lon = obj.locations[0].feature.geometry.x;
+          console.log(lat + " " + lon);
+          
+          var newUser = new User({
+            age: req.body.age,
+            minBudget: req.body.minBudget,
+            maxBudget: req.body.maxBudget,
+            officeLocation: {
+              lat: lat,
+              lon: lon
+            },
+            household: {
+              children: req.body.household_children,
+              adults: req.body.household_adults
+            },
+            transportation: req.body.transportation
+          });
 
-  res.send(JSON.stringify(newUser));
+          newUser.save(function (err) {
+            if (err) {
+              console.log('Error');
+              res.send('Error');
+            }
+            res.send(JSON.stringify(newUser));
+          });
+       }   
+  }).on('error', function(err) {
+    console.log(err);
+    res.send('Error');
+  });   
 });
 
 module.exports = router;
