@@ -28,13 +28,13 @@ mongoose.connection.once('open', function(){
       return promisify.f(parse, rawCsv)
     })
     .then((csv) => {
-      return Promise.all(csv.map((hood) => {
-        var nid = hood[1];
-        var green_spaces = hood[7];
+      return Promise.all(csv.map((csvHood) => {
+        var nid = csvHood[1];
+        var green_spaces = csvHood[3];
         return get_neighbourhood_if_exists(nid)
           .then((hood) => {
-            hood.scores.push({category: "green_spaces", value: green_spaces});
-            hood.scores.push({category: "pollutants", value: hood[6]});
+            hood.scores.push({category: "green_spaces", value: green_spaces, delta: csvHood[4]});
+            hood.scores.push({category: "pollutants", value: csvHood[2]});
             return promisify.m(hood, 'save');
           });
       }));

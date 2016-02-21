@@ -31,9 +31,10 @@ mongoose.connection.once('open', function(){
       return Promise.all(csv.map((hood) => {
         var nid = hood[1];
         var density = hood[39];
+        var delta = hood[40];
         return get_neighbourhood_if_exists(nid)
           .then((hood) => {
-            hood.scores.push({category: "density", value: density});
+            hood.scores.push({category: "density", value: density, delta: delta});
             return promisify.m(hood, 'save');
           });
       }));
