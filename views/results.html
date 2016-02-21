@@ -53,9 +53,9 @@
         <!-- item list -->
         <div ng-repeat="hood in hoods">
           <div class="panel panel-default">
-            <div class="panel-heading"><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></div>
+            <div class="panel-heading"><h3><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></h3></div>
           </div>
-          <p>Score: <strong>{[ hood.score.toFixed(2) ]}</strong></p>
+          <h3>Score: <strong>{[ (hood.score * 100).toFixed(2) ]}</strong></h3>
           <table class="table" ng-show="$parent.selectedHood === hood.nid">
             <tr>
               <th>Factor</th>
@@ -86,7 +86,6 @@
 		<!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous  ">
     </script>
-		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&extension=.js&output=embed"></script>
 		<script src="../javascript/scripts.js"></script>
 	</body>
 </html>
