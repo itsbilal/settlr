@@ -6,11 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var app = express();
+var hbs = require("hbs");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
+app.engine('html', hbs.__express);
+
+hbs.registerHelper('escape', function(variable) {
+  return variable.replace(/(['])/g, '\\$1');
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
