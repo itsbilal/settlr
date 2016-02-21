@@ -11,6 +11,7 @@ module.exports = function(){
       {
         category: String,
         value: Number,
+        delta: Number,
       }
     ],
     centroid: {
