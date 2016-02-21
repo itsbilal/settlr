@@ -43,19 +43,15 @@ router.post('/registerUser', function(req, res) {
             transportation: req.body.transportation
           });
 
-          newUser.save(function (err) {
-            if (err) {
-              console.log('Error');
-              res.send('Error');
-            }
-
-            var topHoods = computeTopNeighbourhood(lat, lon, req, res);
-
-            
-          });
+          computeTopNeighbourhood(lat, lon, req, res);
+          // newUser.save(function (err) {
+          //   if (err) {
+          //     res.send('Error');
+          //   }
+          // });
        }   
   }).on('error', function(err) {
-    console.log(err);
+    console.error(err);
     res.send('Error');
   });   
 });
@@ -85,7 +81,7 @@ function getFactors(body) {
   f.green_spaces = 0.85 + (0.15 * parseInt(body.children));
 
   // capping
-  f = _.mapValues(f, (val) => {
+  f = _.mapObject(f, (val) => {
     if (val < -1.5) {
       return -1.5;
     } else if (val > 1.5) {
@@ -145,7 +141,7 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
     });
 
     Promise.all(promises).then(function(value) { 
-      console.log(value);
+      //console.log(value);
 
       var hoods = value.map(function(obj){
         var hood = obj[0];
@@ -157,8 +153,8 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
       res.send(JSON.stringify(hoods));
     });
   }).catch(function(reason) {
-      console.log(reason);
-    });
+    console.error(reason);
+  });
 };
 
 module.exports = router;
