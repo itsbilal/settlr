@@ -85,7 +85,7 @@ function getFactors(body) {
 
   f.crime = 1.00 + (parseInt(body.children)*0.10);
   f.pollutants = 0.85;
-  f.density = -1 * ((parseInt(body.adults) + parseInt(body.children)) - 2.5);
+  f.density = (-1 * ((parseInt(body.adults) + parseInt(body.children)) - 2.5)) + (1 - 0.05*(Math.abs(27-body.age)));
   f.green_spaces = 0.85 + (0.15 * parseInt(body.children));
 
   // capping
