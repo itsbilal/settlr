@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var User = mongoose.model('User');
 var Hood = mongoose.model('Hood');
 
+var _ = require ("underscore");
 var request = require("request");
 var geoLib = require("geolib");
 var promisify = require("../helpers/promisify");
@@ -78,7 +79,7 @@ function factors(body) {
       factors.walkscore = 0.80
   }
 
-  factors.crime = 1.00 + (body.)
+  //factors.crime = 1.00 + (body)
 
   hoods.score = hoods.map((hood) => {
     hood.score = hood.scores.reduce((prev, curr) => {
@@ -119,6 +120,17 @@ function computeTopNeighbourhood(workLat, workLon, res){
                 };
     };
 
+    hoods = hoods.map((hood) => {
+      hood.score = hood.scores.reduce((prev, curr) => {
+        var value = curr.value / maxMap[curr.category];
+        if (curr.category === "crime" || curr.category === "pollutants") {
+          value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
+        }
+        return prev + (value * factors[curr.category]);
+      }, 0);
+      return hood;
+    });
+
     hoods.sort(function(a,b){return a.dist > b.dist });
 
     // Make this only run for 5 hoods
@@ -138,10 +150,10 @@ function computeTopNeighbourhood(workLat, workLon, res){
       }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
 
       res.send(JSON.stringify(hoods));
-    }).catch(function(reason) {
+    });
+  }).catch(function(reason) {
       console.log(reason);
     });
-  });
 };
 
 module.exports = router;
