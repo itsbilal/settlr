@@ -9,11 +9,24 @@
 		
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="../public/stylesheets/style.css" rel="stylesheet">
+		<link href="../stylesheets/style.css" rel="stylesheet">
+    <script src="https://js.arcgis.com/3.15/"></script>
+    <script>
+      var map;
+
+      require(["esri/map", "dojo/domReady!"], function(Map) {
+        map = new Map("map", {
+          basemap: "topo",  //For full list of pre-defined basemaps, navigate to http://arcg.is/1JVo6Wd
+          center: [-122.45, 37.75], // longitude, latitude
+          zoom: 13
+        });
+      });
+    </script>
 	</head>
 	<body>
 <!-- begin template -->
@@ -53,7 +66,8 @@
     </div>
 </div>
 
-<div id="map-canvas"></div>
+
+<div id="map"></div>
 <div class="container-fluid" id="main">
   <div class="row">
   	<div class="col-xs-8" id="left">
@@ -115,7 +129,7 @@
       <hr>      
 
     </div>
-    <div class="col-xs-4"><!--map-canvas will be postioned here--></div>
+    <div class="col-xs-4"></div>
     
   </div>
 </div>
@@ -127,6 +141,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous  ">
     </script>
 		<script src="http://maps.googleapis.com/maps/api/js?sensor=false&extension=.js&output=embed"></script>
-		<script src="../public/javascript/scripts.js"></script>
+		<script src="../javascript/scripts.js"></script>
 	</body>
 </html>
