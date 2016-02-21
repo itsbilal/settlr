@@ -79,7 +79,7 @@ function computeTopNeighbourhood(workLat, workLon, res){
     hoods.sort(function(a,b){return a.dist > b.dist });
 
     // Make this only run for 5 hoods
-    var promises = hoods.slice(0,10).map(function(hood){
+    var promises = hoods.slice(0,20).map(function(hood){
       return Promise.all([Promise.resolve(hood), promisify.f(request, "http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?token=nnGUflOKPrchILM9MlMcaVVIoXauPlcylUvZnNtcyibzfAAWGkrgaN2Om3dRJOGrrfJhUCPbRU-JCarVlswkSysRa21bqZttl7WICTAEJ4i1G_i6GxfWo5ZU9HTedSGqguniW2ebenCn8lMc3SFTIA..&stops="+
                           workLon+","+workLat+";"+hood.centroid.y+","+hood.centroid.x+"&f=pjson")]);
     });
@@ -92,7 +92,7 @@ function computeTopNeighbourhood(workLat, workLon, res){
         var time = JSON.parse(obj[1].body).directions[0].summary.totalTime;
         hood['timeToWork'] = time;
         return hood;
-      }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,5);
+      }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
 
       res.send(JSON.stringify(hoods));
     }).catch(function(reason) {
