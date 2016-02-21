@@ -24,9 +24,12 @@ angular.module("results", [])
             });
           }
 
+
+
           // scope.$watch(scope.hoods, function(){
           var reloadMap = function(){
             map.graphics.clear();
+            var maxScore = _.max(scope.hoods, function(hood){return hood.score}).score;
             var graphics = scope.hoods.map(function(hood) {
               var polygonJson = {
                 geometry: {
@@ -34,7 +37,7 @@ angular.module("results", [])
                   spatialReference: {"wkid":102100,"latestWkid":3857}
                 },
                 "symbol": {
-                  "color":(scope.selectedHood === hood.nid ? [0,0,0,255] : [0,0,0,64]),
+                  "color":(scope.selectedHood === hood.nid ? [0,0,0,255] : [0,0,Math.floor(255.0*(hood.score/maxScore)),Math.floor(128.0*(hood.score/maxScore))]),
                   "outline":{
                     "color":[0,0,0,255],
                     "width":1,
