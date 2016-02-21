@@ -56,7 +56,7 @@
           <div class="panel panel-default">
             <div class="panel-heading"><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></div>
           </div>
-          <p>{[ hood.score ]}</p>
+          <p>Score: <strong>{[ hood.score.toFixed(2) ]}</strong></p>
           <table class="table" ng-show="$parent.selectedHood === hood.nid">
           <div id="", style="overflow-y:scroll;">
             <tr>
