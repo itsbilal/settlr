@@ -136,10 +136,10 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
         if (factors[curr.category] < 0) {
           value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
         }
-        console.log(curr.category);
-        console.log(value);
-        console.log(factors[curr.category]);
-        console.log(" ")
+        // console.log(curr.category);
+        // console.log(value);
+        // console.log(factors[curr.category]);
+        // console.log(" ")
         return prev + (value * Math.abs(factors[curr.category]));
       }, 0);
       return hood;
