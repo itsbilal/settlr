@@ -59,6 +59,41 @@ router.post('/registerUser', function(req, res) {
   });   
 });
 
+function factors(body) {
+  var factors = {};
+
+  switch (body.transportation) {
+    case "car":
+      factors.walkscore = 0.50;
+      break;
+    case "transit":
+      factors.walkscore = 1.20;
+      break;
+    case "walk":
+      factors.walkscore = 1.50;
+      break;
+    case "bike":
+      factors.walkscore = 1.00;
+    default:
+      factors.walkscore = 0.80
+  }
+
+  factors.crime = 1.00 + (body.)
+
+  hoods.score = hoods.map((hood) => {
+    hood.score = hood.scores.reduce((prev, curr) => {
+      var value = curr.value / maxMap[curr.category];
+      if (curr.category === "crime" || curr.category === "pollutants") {
+        value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
+      }
+      return prev + (value * factors[curr.category]);
+    }, 0);
+    return hood;
+  });
+
+  return hoods;
+}
+
 function computeTopNeighbourhood(workLat, workLon, res){
   promisify.m(Hood, 'find').then(function(result){
     var hoods = [];
