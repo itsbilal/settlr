@@ -12,7 +12,11 @@ module.exports = function(){
         category: String,
         value: Number,
       }
-    ]
+    ],
+    centroid: {
+      x: Number,
+      y: Number
+    }
   };
 
   // Register the model
