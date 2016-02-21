@@ -1,8 +1,72 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body{
+	height: 100%;
+  width: 100%;
+  padding-top:70px;
 }
 
-a {
-  color: #00B7FF;
+body {
+  background-color: red;
+}
+
+nav {
+  width: 100%;
+  background-color: #181619;
+  border-radius: 0 !important;
+}
+
+section {
+  height:calc(90% - 50px);
+}
+
+
+.affix {
+  padding:0px;
+  padding-bottom:15px;
+  -webkit-transition:padding 0.2s linear;
+  -moz-transition:padding 0.2s linear;
+  -o-transition:padding 0.2s linear;
+  transition:padding 0.2s linear;
+
+}
+
+.affix-top {
+  padding-top:15px;
+  padding-bottom:15px;
+  -webkit-transition:padding 0.5s linear;
+  -moz-transition:padding 0.5s linear;
+  -o-transition:padding 0.5s linear;
+  transition:padding 0.5s linear;
+}
+
+.navbar-header {
+  height: 100px;
+  margin-left: 100px;
+}
+
+#logo {
+  margin-left: 50px;
+}
+
+#myNavbar li a {
+  text-align: right;
+  margin: 30px 15px 15px;
+  color: white;
+}
+
+.end {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/*------------------------Footer--------------------------*/
+
+footer {
+  width: 100%;
+  background: #181619;
+  padding: 6em;
+  text-align: center;
+}
+
+footer p {
+  color: white;
 }
