@@ -14,8 +14,10 @@
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="../stylesheets/style.css" rel="stylesheet">
+		<link href="/stylesheets/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
     <script src="https://js.arcgis.com/3.15/"></script>
+    <script src="javascript/results.js"></script>
     <script>
       var map;
 
@@ -49,7 +51,7 @@
       
     </script>
 	</head>
-	<body>
+	<body ng-app="results">
 <!-- begin template -->
 <div class="navbar navbar-custom navbar-fixed-top">
  <div class="navbar-header"><a class="navbar-brand" href="#"><img src="/images/settlr2.png" height="30px" width="70px"></a>
@@ -70,54 +72,35 @@
 
 
 <div id="map"></div>
-<div class="container-fluid" id="main">
+<div class="container-fluid" id="main" ng-controller="MapView">
   <div class="row">
   	<div class="col-xs-8" id="left">
     
       <h2>Your Neighbourhood Matches</h2>
       
       <!-- item list -->
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="">{{title1}}title1</a></div>
+      <div ng-repeat="hood in hoods">
+        <div class="panel panel-default">
+          <div class="panel-heading"><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></div>
+        </div>
+        <p>{[ hood.score ]}</p>
+        <table class="table" ng-show="$parent.selectedHood === hood.nid">
+          <tr>
+            <th>Factor</th>
+            <th>Value</th>
+            <th>Trend</th>
+          </tr>
+          <tr ng-repeat="score in hood.scores">
+            <td>{[score.category]}</td>
+            <td>{[score.value]}</td>
+            <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
+            <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+            <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
+          </tr>
+        </table>
+        <hr>
       </div>
-      <p>{{text1}}text1</p>
       
-      <hr>
-      
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="">{{title2}}title2</a></div>
-      </div>
-      <p>{{text2}}text2</p>
-      
-      <hr>
-      
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="">{{title3}}title3</a></div>
-      </div>
-      <p>{{text3}}text3</p>
-      
-      <hr>
-      
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="">{{title4}}title4</a></div>
-      </div>
-      <p>{{text4}}text4</p>
-      
-      <hr> 
-
-      <div class="panel panel-default">
-        <div class="panel-heading"><a href="">{{title5}}title5</a></div>
-      </div>
-      <p>{{text5}}text5</p>
-      
-      <hr> 
-        
-      <p>
-      <a href="/" class="center-block btn btn-primary">Search Again</a>
-      </p>
-        
-      <hr>      
-
     </div>
     <div class="col-xs-4"></div>
     

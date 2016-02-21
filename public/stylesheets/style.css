@@ -45,6 +45,14 @@ body{
   
 }
 
+.down-red {
+  color: #F72020;
+}
+
+.up-green {
+  color: #00e600;
+}
+
 #main, #main>.row {
 	height:100%;
 
