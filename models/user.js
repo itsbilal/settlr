@@ -4,7 +4,6 @@ var mongoose = require("mongoose");
 
 module.exports = function(){
   var user = {
-    name: String,
     age: Number,
     minBudget: Number,
     maxBudget: Number,
@@ -16,11 +15,7 @@ module.exports = function(){
       children: Number,
       adults: Number
     },
-    transportation: {
-      car: Number,
-      transit: Number,
-      bike: Number
-    }
+    transportation: String
   };
 
   // Register the model
