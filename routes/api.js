@@ -60,38 +60,41 @@ router.post('/registerUser', function(req, res) {
 });
 
 function factors(body) {
-  var factors = {};
+  var f = {};
 
   switch (body.transportation) {
     case "car":
-      factors.walkscore = 0.50;
+      f.walkscore = 0.50;
       break;
     case "transit":
-      factors.walkscore = 1.20;
+      f.walkscore = 1.20;
       break;
     case "walk":
-      factors.walkscore = 1.50;
+      f.walkscore = 1.50;
       break;
     case "bike":
-      factors.walkscore = 1.00;
+      f.walkscore = 1.00;
     default:
-      factors.walkscore = 0.80
+      f.walkscore = 0.80;
   }
 
-  factors.crime = 1.00 + (body.)
+  f.crime = 1.00 + (parseInt(body.children)*0.10);
+  f.pollutants = 0.85;
+  f.density = -1 * ((parseInt(body.adult) + parseInt(body.children)) - 2.5);
+  f.green_spaces = 0.85 + (0.15 * parseInt(body.children));
 
-  hoods.score = hoods.map((hood) => {
-    hood.score = hood.scores.reduce((prev, curr) => {
-      var value = curr.value / maxMap[curr.category];
-      if (curr.category === "crime" || curr.category === "pollutants") {
-        value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
-      }
-      return prev + (value * factors[curr.category]);
-    }, 0);
-    return hood;
+  // capping
+  f = _.mapValues(f, (val) => {
+    if (val < -1.5) {
+      return -1.5;
+    } else if (val > 1.5) {
+      return 1.5;
+    } else {
+      return val;
+    }
   });
 
-  return hoods;
+  return f;
 }
 
 function computeTopNeighbourhood(workLat, workLon, res){
