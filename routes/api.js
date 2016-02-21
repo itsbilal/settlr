@@ -163,7 +163,7 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
       var time = JSON.parse(obj[1].body).directions[0].summary.totalTime;
       hood['timeToWork'] = time;
       return hood;
-    }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
+    }).sort(function(a,b){return a.timeToWork < b.timeToWork}).slice(0,15);
 
     return Promise.resolve(hoods);
   })
