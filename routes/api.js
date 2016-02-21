@@ -62,6 +62,14 @@ router.post('/registerUser', function(req, res) {
 function computeTopNeighbourhood(workLat, workLon, res){
   promisify.m(Hood, 'find').then(function(result){
     var hoods = [];
+    var keys = _.pluck(result.scores, "category");
+    var values = keys.map((category) => {
+      return _.max(result.map((hood) => {
+        return _.find(hood.scores, (score) => {score.category == category});
+      }));
+    });
+    var maxMap = _.object(keys, values);
+
     for (var i = 0; i < result.length; i++){
       var hoodLat = result[i].centroid.x;
       var hoodLon = result[i].centroid.y;
