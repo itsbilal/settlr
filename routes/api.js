@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var User = mongoose.model('User');
 var Hood = mongoose.model('Hood');
 
+var _ = require ("underscore");
 var request = require("request");
 var geoLib = require("geolib");
 var promisify = require("../helpers/promisify");
@@ -48,7 +49,7 @@ router.post('/registerUser', function(req, res) {
               res.send('Error');
             }
 
-            var topHoods = computeTopNeighbourhood(lat, lon, res);
+            var topHoods = computeTopNeighbourhood(lat, lon, req, res);
 
             
           });
@@ -59,7 +60,7 @@ router.post('/registerUser', function(req, res) {
   });   
 });
 
-function factors(body) {
+function getFactors(body) {
   var f = {};
 
   switch (body.transportation) {
@@ -97,7 +98,7 @@ function factors(body) {
   return f;
 }
 
-function computeTopNeighbourhood(workLat, workLon, res){
+function computeTopNeighbourhood(workLat, workLon, req, res){
   promisify.m(Hood, 'find').then(function(result){
     var hoods = [];
     var keys = _.pluck(result[0].scores, "category");
@@ -122,6 +123,19 @@ function computeTopNeighbourhood(workLat, workLon, res){
                 };
     };
 
+    var factors = getFactors(req.body);
+
+    hoods = hoods.map((hood) => {
+      hood.score = hood.scores.reduce((prev, curr) => {
+        var value = curr.value / maxMap[curr.category];
+        if (curr.category === "crime" || curr.category === "pollutants") {
+          value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
+        }
+        return prev + (value * factors[curr.category]);
+      }, 0);
+      return hood;
+    });
+
     hoods.sort(function(a,b){return a.dist > b.dist });
 
     // Make this only run for 5 hoods
@@ -141,10 +155,10 @@ function computeTopNeighbourhood(workLat, workLon, res){
       }).sort(function(a,b){return a.timeToWork > b.timeToWork}).slice(0,15);
 
       res.send(JSON.stringify(hoods));
-    }).catch(function(reason) {
+    });
+  }).catch(function(reason) {
       console.log(reason);
     });
-  });
 };
 
 module.exports = router;
