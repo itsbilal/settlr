@@ -13,7 +13,6 @@ nav {
   box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
 	-webkit-transition: all 0.4s ease;
    transition: all 0.4s ease;
-
 }
 
 nav.navbar.shrink {
@@ -78,7 +77,7 @@ nav.navbar.shrink {
 
 }
 
-#submithere button {
+button {
 	padding: 14px 24px;
   border: 0 none;
 	border-radius: none;
