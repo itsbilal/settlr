@@ -65,7 +65,7 @@
               <th>Trend</th>
             </tr>
             <tr ng-repeat="score in hood.scores">
-              <td>{[score.category]}</td>
+              <td>{[score.category.replace("_"," ").toUpperCase()]}</td>
               <td>{[score.value]}</td>
               <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
               <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
