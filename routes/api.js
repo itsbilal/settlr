@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
-var User = mongoose.model('User');
 var Hood = mongoose.model('Hood');
 
 var _ = require ("underscore");
@@ -28,29 +27,9 @@ router.post('/registerUser', function(req, res) {
         var obj = JSON.parse(response.body);
         var lat = obj.locations[0].feature.geometry.y;
         var lon = obj.locations[0].feature.geometry.x;
-        console.log(lat + " " + lon);
-        
-        var newUser = new User({
-          age: req.body.age,
-          minBudget: req.body.minBudget,
-          maxBudget: req.body.maxBudget,
-          officeLocation: {
-            lat: lat,
-            lon: lon
-          },
-          household: {
-            children: req.body.household_children,
-            adults: req.body.household_adults
-          },
-          transportation: req.body.transportation
-        });
 
         return computeTopNeighbourhood(lat, lon, req, res);
-        // newUser.save(function (err) {
-        //   if (err) {
-        //     res.send('Error');
-        //   }
-        // });
+
      } else {
       return null;
      }
@@ -136,10 +115,6 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
         if (factors[curr.category] < 0) {
           value = (maxMap[curr.category] - curr.value) / maxMap[curr.category];
         }
-        // console.log(curr.category);
-        // console.log(value);
-        // console.log(factors[curr.category]);
-        // console.log(" ")
         return prev + (value * Math.abs(factors[curr.category]));
       }, 0);
       return hood;
@@ -149,19 +124,15 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
 
     // Make this only run for 5 hoods
     var promises = hoods.slice(0,20).map(function(hood){
-      return Promise.all([Promise.resolve(hood), promisify.f(request, "http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World/solve?token=nnGUflOKPrchILM9MlMcaVVIoXauPlcylUvZnNtcyibzfAAWGkrgaN2Om3dRJOGrrfJhUCPbRU-JCarVlswkSysRa21bqZttl7WICTAEJ4i1G_i6GxfWo5ZU9HTedSGqguniW2ebenCn8lMc3SFTIA..&stops="+
-                          workLon+","+workLat+";"+hood.centroid.y+","+hood.centroid.x+"&f=pjson")]);
+      return Promise.all([Promise.resolve(hood), ""]);
     });
 
     return Promise.all(promises)
   })
   .then(function(value) { 
-    //console.log(value);
-
     var hoods = value.map(function(obj){
       var hood = obj[0];
-      var time = JSON.parse(obj[1].body).directions[0].summary.totalTime;
-      hood['timeToWork'] = time;
+      hood['timeToWork'] = hood['dist'];
       return hood;
     })
     .sort(function(a,b){return a.timeToWork - b.timeToWork }).slice(0,15);
