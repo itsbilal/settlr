@@ -20,12 +20,12 @@ hbs.registerHelper('escape', function(variable) {
   return variable.replace(/(['])/g, '\\$1');
 });
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 var mongoose = require("mongoose");
 mongoose.connect("mongodb://"+dbuser+":"+dbpassword+dbaddress);
