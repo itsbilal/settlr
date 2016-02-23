@@ -106,6 +106,7 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
                   dist: geoLib.getDistance({latitude: workLat, longitude: workLon},{latitude: hoodLat, longitude: hoodLon})
                 };
     };
+    hoods.sort(function(a,b){return a.dist - b.dist });
 
     var factors = getFactors(req.body);
 
@@ -119,8 +120,6 @@ function computeTopNeighbourhood(workLat, workLon, req, res){
       }, 0);
       return hood;
     });
-
-    hoods.sort(function(a,b){return a.dist > b.dist });
 
     // Make this only run for 5 hoods
     var promises = hoods.slice(0,20).map(function(hood){
