@@ -1,95 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta charset="utf-8">
-		<title>settlr | results</title>
-		<meta name="generator" content="Bootply" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>settlr | results</title>
+  <meta name="generator" content="Bootply" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<link href="/stylesheets/style.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-    <script src="https://js.arcgis.com/3.15/"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
-    <script>
-      window.hoods = '{{{ escape results }}}';
-    </script>
-    <script src="/javascript/results.js"></script>
-	</head>
-	<body ng-app="results">
-<!-- begin template -->
-<div class="navbar navbar-custom navbar-fixed-top">
- <div class="navbar-header"><a class="navbar-brand" href="/"><img src="/images/settlr2transparent.png" height="40px" width="100px"></a>
-      <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Search Again</a></li>
-        <li>&nbsp;</li>
-      </ul>
-
-    </div>
-</div>
-
-
-<div ng-controller="MapView">
-  <div id="map" ayy-lmao-map></div>
-  <div id="", style="height:100vh;overflow-y:scroll;">
-  <div class="container-fluid" id="main">
-    <div class="row">
-    	<div class="col-xs-8" id="left">
-
-        <h2>Your Neighbourhood Matches</h2>
-
-        <!-- item list -->
-        <div ng-repeat="hood in hoods">
-          <div class="panel panel-default">
-            <div class="panel-heading"><h3><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></h3></div>
-          </div>
-          <h3>Score: <strong>{[ (hood.score * 100).toFixed(2) ]}</strong></h3>
-          <table class="table" ng-show="$parent.selectedHood === hood.nid">
-
-            <tr>
-              <th>Factor</th>
-              <th>Value</th>
-              <th>Trend</th>
-            </tr>
-            <tr ng-repeat="score in hood.scores">
-              <td>{[score.category.replace("_"," ").toUpperCase()]}</td>
-              <td>{[score.value]}</td>
-              <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
-              <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
-              <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
-            </tr>
-            </div>
-          </table>
-          <hr>
+      <![endif]-->
+      <link href="/stylesheets/style.css" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+      <script src="https://js.arcgis.com/3.15/"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+      <script>
+        window.hoods = '{{{ escape results }}}';
+      </script>
+      <script src="/javascript/results.js"></script>
+    </head>
+    <body ng-app="results">
+      <div class="navbar navbar-custom navbar-fixed-top">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/"><img src="/images/settlr2transparent.png" height="50px" ></a>
+          <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/"><i class="fa fa-search" aria-hidden="true"></i> Search Again</a></li>
+            <li>&nbsp;</li>
+          </ul>
+
+        </div>
+      </div>
+
+
+    <div ng-controller="MapView">
+      <div id="map" ayy-lmao-map></div>
+      <div id="", style="height:100vh;overflow-y:scroll;">
+        <div class="container-fluid" id="main">
+          <div class="row">
+           <div class="col-xs-8" id="left">
+           <br>
+            <h2>Your Neighbourhood Matches</h2>
+
+            <!-- item list -->
+            <div ng-repeat="hood in hoods">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h3><a href="" ng-click="$parent.selectedHood = hood.nid">{[ hood.title ]}</a></h3></div>
+              </div>
+              <h3>Score: <strong>{[ (hood.score * 100).toFixed(2) ]}</strong></h3>
+              <table class="table" ng-show="$parent.selectedHood === hood.nid">
+
+                <tr>
+                  <th>Factor</th>
+                  <th>Value</th>
+                  <th>Trend</th>
+                </tr>
+                <tr ng-repeat="score in hood.scores">
+                  <td>{[score.category.replace("_"," ").toUpperCase()]}</td>
+                  <td>{[score.value]}</td>
+                  <td ng-if="score.delta > 0"><span class="glyphicon glyphicon-triangle-top up-green"></span></td>
+                  <td ng-if="!score.delta || score.delta == 0"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></td>
+                  <td ng-if="score.delta < 0"><span class="glyphicon glyphicon-triangle-bottom down-red" aria-hidden="true"></span></td>
+                </tr>
+              </div>
+            </table>
+            <hr>
+          </div>
         </div>
       </div>
       <div class="col-xs-4"></div>
 
     </div>
 
-</div>
+  </div>
 </div>
 <!-- end template -->
 
-	<!-- script references -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-		<!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous  ">
-    </script>
-	</body>
+<!-- script references -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous  ">
+</script>
+</body>
 </html>

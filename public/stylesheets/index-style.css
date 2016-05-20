@@ -1,29 +1,56 @@
 html, body{
 	height: 100%;
   width: 100%;
-  padding-top:20px;
+
 }
 
-nav {
-  width: 100%;
-  background-color: #181619;
-  border-radius: 0 !important;
-	-webkit-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
-  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.5);
-	-webkit-transition: all 0.4s ease;
-   transition: all 0.4s ease;
+.navbar-custom .icon-bar {
+	background-color:#fff;
 }
 
-nav.navbar.shrink {
-  min-height: 35px;
+.navbar-custom {
+	background-color: #181619;
+  height: 75px;
+    color:#fff;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.navbar-custom li a{
+	padding-top: 27px;
+	height: 75px;
+}
+
+.navbar-custom li>a:hover,.navbar-custom li>a:focus {
+	background-color:#49bfff;
+	padding-top: 27px;
+	height: 75px;
+}
+
+.navbar-custom a{
+    color:#fefefe;
+    line-height: 30px
+}
+
+.navbar-custom .form-control:focus {
+	border-color: #49bfff;
+	outline: 0;
+	-webkit-box-shadow: inset 0 0 0;
+	box-shadow: inset 0 0 0;
+}
+
+.page-scroll {
+  -webkit-transition: all 0.35s;
+  -moz-transition: all 0.35s;
+  transition: all 0.35s;
+  color: #1e699c;
 }
 
 .jumbotron {
 	background-color:transparent !important;
 	margin-top: 250px;
 }
-
 
 .container-full-bg {
 	color: white;
@@ -40,53 +67,38 @@ nav.navbar.shrink {
 	padding: 100px;
 }
 
-.navbar-header {
-  height: 100px;
-  margin-left: 100px;
-}
-
-
-#logo {
-  margin-left: 50px;
-}
-
-#myNavbar li a {
-  text-align: right;
-  margin: 30px 15px 15px;
-  color: white;
-}
-
-#myNavbar li:hover a {
-	text-decoration: none;
-	background-color: #3eaaef;
-	padding: 10px 15px 10px ;
-}
-
-.Introduction {
-	margin-top: 70px;
-	margin-bottom: 50px;
-
-}
-
 #yourcity {
 	background-color: #3eaaef;
-	padding: 30px;
+	padding: 10px;
 	width: 100%;
 	text-align: center;
+	color: #FFF;
+}
 
+#aboutTitle{
+	background-color: #3eaaef;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+	color: #FFF;
+}
+
+#aboutUs{
+	font-size: 1.2em;
 }
 
 button {
-	color: #3eaaef;
+	background-color: #3eaaef;
+	color: #FFF;
+	font-size: 1.3em;
 	padding: 14px 24px;
-  border: 0 none;
-	border-radius: none;
-  letter-spacing: 1px;
-  text-transform: lowercase;
+	border: 0 none;
+	border-radius: 6px;
+	letter-spacing: 1px;
 }
 
 form {
-	margin-top: 50px;
+	margin-top: 30px;
 }
 
 /*------------------------Footer--------------------------*/
@@ -94,7 +106,7 @@ form {
 footer {
   width: 100%;
   background: #181619;
-  padding: 6em;
+  padding: 1.5em;
   text-align: center;
 }
 
